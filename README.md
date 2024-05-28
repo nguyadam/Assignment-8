@@ -11,3 +11,4 @@ python -m basic.basic_name_request_microservice
 **This information will get logged in the 'log.txt' file which can be viewed externally through the current working directory**
 **If we want to receive data from the microservice, we can write the following call which will fetch the logs created from each request made by the other microservices**
 python -m logging.logging_microservice --fetch-logs
+![image](https://github.com/nguyadam/Assignment-8/assets/147447331/1939fde1-5a6a-440d-beb2-80caa285bc4d)
