@@ -1,16 +1,23 @@
-import sys
 import os
+import time
 
-# Add the parent directory to the system path to enable module import
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from logging.logging_microservice import log_request
+MESSAGE_FILE = '../message_queue.txt'
 
 def basic_name_request():
     name = "John Doe"
-    log_request("Basic Name Request Microservice", f"Requested basic name: {name}")
     return name
 
-# Example request
+def send_message(service_name, message):
+    with open(MESSAGE_FILE, 'a') as f:
+        f.write(f"{service_name}|{message}\n")
+
+def main():
+    request_generated = False  # Variable to track whether request is generated
+    while not request_generated:  # Loop until request is generated
+        name = basic_name_request()
+        send_message("Basic Name Request Microservice", f"Requested basic name: {name}")
+        print(f"Requested basic name: {name}")
+        request_generated = True  # Set flag to True after generating request
+        time.sleep(5)
 if __name__ == "__main__":
-    print(basic_name_request())
+    main()

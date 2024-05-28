@@ -1,19 +1,26 @@
 import random
-import sys
 import os
+import time
 
-# Add the parent directory to the system path to enable module import
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from logging.logging_microservice import log_request
-
+MESSAGE_FILE = '../message_queue.txt'
 NAMES = ["Alice", "Bob", "Charlie", "Dana", "Eve"]
 
 def generate_name():
     name = random.choice(NAMES)
-    log_request("Category-Based Name Microservice", f"Generated name: {name}")
     return name
 
-# Example request
+def send_message(service_name, message):
+    with open(MESSAGE_FILE, 'a') as f:
+        f.write(f"{service_name}|{message}\n")
+
+def main():
+    request_generated = False  # Variable to track whether request is generated
+    while not request_generated:  # Loop until request is generated
+        name = generate_name()
+        send_message("Category-Based Name Microservice", f"Generated name: {name}")
+        print(f"Generated name: {name}")
+        request_generated = True  # Set flag to True after generating request
+        time.sleep(5)
+
 if __name__ == "__main__":
-    print(generate_name())
+    main()
